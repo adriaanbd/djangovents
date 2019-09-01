@@ -20,3 +20,8 @@ Models:
 * User
   - as event creator
   - as event attendee
+
+Associations:
+
+* An event is created by an user
+* An event has zero or many attendees

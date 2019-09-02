@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django507</title>
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Djangovents</a>
+        <ul id="nav-mobile" class="left">
+          <li><a href="#">Events</a></li>
+          <li><a href="#">New Event</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div>
+    {% block content %}
+    <h3 class="center">Welcome to Djangovents</h3>
+    {% endblock content %}
+  </div>
+</body>
+</html>

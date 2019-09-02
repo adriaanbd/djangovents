@@ -20,4 +20,5 @@ urlpatterns = [
     path('', include('events.urls')),  # root route to events
     path('events/', include('events.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

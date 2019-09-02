@@ -131,4 +131,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'djangovents/static'),
 ]
 
-LOGIN_REDIRECT_URL = '/events'
+LOGIN_REDIRECT_URL = '/events'  # overrides default to accounts/profile/
+LOGOUT_REDIRECT_URL = '/events'
+

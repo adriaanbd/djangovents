@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block nav %}
+  <li><a href="/events/index">Events</a></li>
+  <li><a href="/events/new">New Event</a></li>
+  <li class="right"><a href="{% url 'logout'%}">Log out</a></li>
+{% endblock nav %}
 
+{% block content %}
 <div class="container">
   <div class="row">
     <div class="col s12">

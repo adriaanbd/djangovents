@@ -13,15 +13,17 @@ def show(request, event_id):
     return HttpResponse(f'<h1>{event.name}</h1>')
 
 def new(request):
-    submitted = False
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/events')
+            event_params = form.save(commit=False)
+            event_params.creator = request.user
+            event_params.save()
+            return HttpResponseRedirect('/events/index')
+        else:
+            return HttpResponse('<p>Not valid</p>')
     else:
         form = EventForm()
-        if 'submitted' in request.GET:
-            submitted = True
-        return render(request, 'events/new.html', {'form': form, 'submitted': submitted})
+        if request.method == 'GET':
+            return render(request, 'events/new.html', {'form': form})
 

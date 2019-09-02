@@ -6,4 +6,4 @@ class EventForm(ModelForm):
     required_css_class = 'required'
     class Meta:
       model = Event
-      exclude = ['date_created']
+      exclude = ['date_created', 'creator']

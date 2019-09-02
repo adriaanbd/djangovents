@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <h3 class="center">New Event</h3>
+      {% if submitted %}
+      <p class="success">
+        Your event was submitted successfully!
+      </p>
+      {% else %}
+      <form action="" method="post" novalidate>
+      <table>
+        {{  form.as_table }}
+        <tr>
+          <td>
+            <input type="submit" value="Submit">
+          </td>
+        </tr>
+      </table>
+      {% csrf_token %}
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock content %}

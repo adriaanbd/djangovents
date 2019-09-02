@@ -3,7 +3,8 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s3"></div>
+    <div class="col s6">
       <h3 class="center">New Event</h3>
       {% if submitted %}
       <p class="success">
@@ -16,6 +17,7 @@
       {% csrf_token %}
       </form>
     </div>
+    <div class="col s3"></div>
   </div>
 </div>
 {% endif %}

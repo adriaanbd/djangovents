@@ -10,15 +10,9 @@
         Your event was submitted successfully!
       </p>
       {% else %}
-      <form action="" method="post" novalidate>
-      <table>
-        {{  form.as_table }}
-        <tr>
-          <td>
-            <input type="submit" value="Submit">
-          </td>
-        </tr>
-      </table>
+      <form method="post" novalidate>
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
       {% csrf_token %}
       </form>
     </div>

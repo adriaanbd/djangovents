@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
 from .forms import EventForm
@@ -12,6 +13,7 @@ def show(request, event_id):
     event = Event.objects.get(id=event_id)
     return HttpResponse(f'<h1>{event.name}</h1>')
 
+@login_required  # also takes optional args to redirect to specific path
 def new(request):
     if request.method == 'POST':
         form = EventForm(request.POST)

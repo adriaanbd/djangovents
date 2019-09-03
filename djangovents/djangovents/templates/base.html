@@ -19,8 +19,10 @@
           {% if user.is_authenticated %}
             <li><a href="/events/new">New Event</a></li>
             <li><a href="{% url 'logout'%}">Sign out</a></li>
+            <li>Welcome, {{ user.first_name }}</li>
           {% else %}
             <li><a href="{% url 'login'%}">Sign in</a></li>
+            <li><a href="{% url 'signup'%}">Sign up</a></li>
           {% endif %}
         </ul>
       </div>

@@ -1,8 +1,28 @@
 from django.shortcuts import render
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 from .models import Event
 from .forms import EventForm
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            if not user:
+                return redirect('signup')
+            login(request, user)
+        return redirect('/events/index.html')
+    else:
+        form = UserCreationForm()
+    return render(request, 'events/signup.html', {'form': form})
 
 
 def index(request):

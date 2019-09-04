@@ -2,9 +2,23 @@
 
 {% block content %}
 <h3 class="center">All Events</h3>
-<ul>
-  {% for event in events %}
-    <li class="center"><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></li>
-  {% endfor %}
-</ul>
+<table class="striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Venue</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+        <tr>
+          <td><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></td>
+          <td>{{ event.event_date }}</td>
+          <td>{{ event.venue }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
 {% endblock content %}
+

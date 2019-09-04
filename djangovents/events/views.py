@@ -41,10 +41,23 @@ def new(request):
             event_params.creator = request.user
             event_params.save()
             return redirect('/events/index')
-        else:
-            return HttpResponse('<p>Not valid</p>')
     else:
         form = EventForm()
         if request.method == 'GET':
             return render(request, 'events/new.html', {'form': form})
+
+def edit(request, event_id):
+    event = Event.objects.get(id=event_id)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect(event.get_absolute_url())
+        else:
+            form = EventForm(instance=event)
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'events/edit.html', {'form': form, 'event': event})
+
+
 

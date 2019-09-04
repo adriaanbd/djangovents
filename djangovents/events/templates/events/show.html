@@ -2,6 +2,7 @@
 
 {% block content %}
 <h3 class="center">{{ event.name }}</h3>
+<a class="center" href="{% url 'edit' event.id %}">Edit</a>
 <table class="striped">
   <tr><td class="center">Date: {{ event.event_date }}</td></tr>
   <tr><td class="center">Start at: {{ event.time_start }}</td></tr>

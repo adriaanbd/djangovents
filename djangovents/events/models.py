@@ -13,5 +13,13 @@ class Event(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        indexes = [models.Index(fields=['creator'])]
+        verbose_name = 'event'
+        verbose_name_plural = 'events'
+
+    def get_absolute_url(self):
+        return f"/events/{self.pk}"
+
     def __str__(self):
         return self.name

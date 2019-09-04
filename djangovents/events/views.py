@@ -22,7 +22,7 @@ def signup(request):
 
 
 def index(request):
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-event_date')
     return render(request, 'events/index.html', {'events': events})
 
 @login_required

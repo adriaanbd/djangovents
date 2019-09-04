@@ -15,7 +15,7 @@
       <div class="nav-wrapper">
         <a href="#" class="brand-logo center">Djangovents</a>
         <ul id="nav-mobile" class="left">
-          <li><a href="/events/index">Events</a></li>
+          <li><a href="/events/">Events</a></li>
           {% if user.is_authenticated %}
             <li><a href="/events/new">New Event</a></li>
             <li><a href="{% url 'logout'%}">Sign out</a></li>

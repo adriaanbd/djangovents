@@ -27,6 +27,7 @@ def index(request):
     events = Event.objects.all()
     return render(request, 'events/index.html', {'events': events})
 
+@login_required
 def show(request, event_id):
     event = Event.objects.get(id=event_id)
     return render(request, 'events/show.html', {'event': event})

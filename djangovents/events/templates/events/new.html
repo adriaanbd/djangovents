@@ -1,24 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col s3"></div>
-    <div class="col s6">
-      <h3 class="center">New Event</h3>
-      {% if submitted %}
-      <p class="success">
-        Your event was submitted successfully!
-      </p>
-      {% else %}
-      <form method="post" novalidate>
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-      {% csrf_token %}
-      </form>
-    </div>
-    <div class="col s3"></div>
-  </div>
-</div>
-{% endif %}
+<h3 class="center">New Event</h3>
+<form method="post" novalidate>
+  {{ form.as_p }}
+  <input type="submit" value="Submit">
+{% csrf_token %}
+</form>
 {% endblock content %}

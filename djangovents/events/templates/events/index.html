@@ -1,16 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col s12">
-      <h3>All Events</h3>
-      <ul>
-        {% for event in events %}
-          <li><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-</div>
+<h3 class="center">All Events</h3>
+<ul>
+  {% for event in events %}
+    <li class="center"><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></li>
+  {% endfor %}
+</ul>
 {% endblock content %}

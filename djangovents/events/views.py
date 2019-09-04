@@ -29,7 +29,7 @@ def index(request):
 
 def show(request, event_id):
     event = Event.objects.get(id=event_id)
-    return HttpResponse(f'<h1>{event.name}</h1>')
+    return render(request, 'events/show.html', {'event': event})
 
 @login_required  # also takes optional args to redirect to specific path
 def new(request):
@@ -39,7 +39,7 @@ def new(request):
             event_params = form.save(commit=False)
             event_params.creator = request.user
             event_params.save()
-            return HttpResponseRedirect('/events/index')
+            return redirect('/events/index')
         else:
             return HttpResponse('<p>Not valid</p>')
     else:

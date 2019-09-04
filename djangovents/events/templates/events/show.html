@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3 class="center">{{ event.name }}</h3>
-<a class="center" href="{% url 'edit' event.id %}">Edit</a>
+<div class="center">
+  <h3>{{ event.name }}</h3>
+  <a href="{% url 'edit' event.id %}">Edit</a>
+  <a href="{% url 'delete' event.id %}">Delete</a>
+</div>
 <table class="striped">
   <tr><td class="center">Date: {{ event.event_date }}</td></tr>
   <tr><td class="center">Start at: {{ event.time_start }}</td></tr>

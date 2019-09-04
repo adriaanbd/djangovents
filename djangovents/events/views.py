@@ -27,6 +27,8 @@ def index(request):
 
 @login_required
 def show(request, event_id):
+    current_user = request.user
+    print(current_user)
     event = Event.objects.get(id=event_id)
     return render(request, 'events/show.html', {'event': event})
 
@@ -47,6 +49,8 @@ def new(request):
 @login_required
 def edit(request, event_id):
     event = Event.objects.get(id=event_id)
+    if request.user != event.creator:
+        return redirect('index')
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
@@ -61,5 +65,6 @@ def edit(request, event_id):
 @login_required
 def delete_event(request, event_id):
     event = Event.objects.get(id=event_id)
-    event.delete()
+    if request.user == event.creator:
+        event.delete()
     return redirect('index')

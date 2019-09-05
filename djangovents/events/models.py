@@ -10,8 +10,9 @@ class Event(models.Model):
     time_end = models.TimeField('Event end time')
     venue = models.CharField(max_length=120)
     description = models.TextField(max_length=240)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events')
     date_created = models.DateTimeField(default=timezone.now)
+    attendee = models.ManyToManyField(User, related_name='event_attendations')
 
     class Meta:
         indexes = [models.Index(fields=['creator'])]

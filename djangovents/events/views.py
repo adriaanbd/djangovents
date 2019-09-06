@@ -1,70 +1,66 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib.auth.forms import UserCreationForm
 from .models import Event
 from .forms import EventForm, SignUpForm
+from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
+from django.urls import reverse_lazy
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
+class SignUpView(CreateView):
+    form_class = SignUpForm
+    success_url = reverse_lazy('login')
+    template_name = 'events/signup.html'
+
+
+class EventList(ListView):
+    model = Event
+    template_name = 'events/index.html'
+
+@method_decorator(login_required, name='dispatch')
+class NewEvent(CreateView):
+    model = Event
+    form_class = EventForm
+    success_url = 'index'  # if not found, defaults go get_absolute_url
+    template_name = 'events/new.html'
+
+    def form_valid(self, form):
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-        return redirect('index')
-    else:
-        form = SignUpForm()
-    return render(request, 'events/signup.html', {'form': form})
+            self.object = form.save(commit=False)
+            self.object.creator = self.request.user
+            self.object.save()
+            return redirect(self.get_success_url())
+
+@method_decorator(login_required, name='dispatch')
+class EventDetailView(DetailView):
+    model = Event
+    template_name = "events/show.html"
 
 
-def index(request):
-    events = Event.objects.all().order_by('-event_date')
-    return render(request, 'events/index.html', {'events': events})
+@method_decorator(login_required, name='dispatch')
+class EventDeleteView(DeleteView):
+    model = Event
+    success_url = reverse_lazy('index')
 
-@login_required
-def show(request, event_id):
-    current_user = request.user
-    print(current_user)
-    event = Event.objects.get(id=event_id)
-    return render(request, 'events/show.html', {'event': event})
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.creator != self.request.user:
+            return redirect(self.success_url)
+        return super().post(request, *args, **kwargs)
 
-@login_required  # also takes optional args to redirect to specific path
-def new(request):
-    if request.method == 'POST':
-        form = EventForm(request.POST)
-        if form.is_valid():
-            event_params = form.save(commit=False)
-            event_params.creator = request.user
-            event_params.save()
-            return redirect('index')
-    else:
-        form = EventForm()
-        if request.method == 'GET':
-            return render(request, 'events/new.html', {'form': form})
+@method_decorator(login_required, name='dispatch')
+class EventUpdateView(UpdateView):
+    model = Event
+    fields = [
+        'name', 'event_date', 'time_start', 
+        'time_end', 'venue', 'description']
+    template_name = 'events/edit.html'
+    success_url = reverse_lazy('index')
 
-@login_required
-def edit(request, event_id):
-    event = Event.objects.get(id=event_id)
-    if request.user != event.creator:
-        return redirect('index')
-    if request.method == 'POST':
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            form.save()
-            return redirect(event.get_absolute_url())
-        else:
-            form = EventForm(instance=event)
-    else:
-        form = EventForm(instance=event)
-    return render(request, 'events/edit.html', {'form': form, 'event': event})
-
-@login_required
-def delete_event(request, event_id):
-    event = Event.objects.get(id=event_id)
-    if request.user == event.creator:
-        event.delete()
-    return redirect('index')
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.creator != self.request.user:
+            return redirect(self.success_url)
+        return super().get(request, *args, **kwargs)

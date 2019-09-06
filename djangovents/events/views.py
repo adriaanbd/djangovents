@@ -8,6 +8,7 @@ from .forms import EventForm, SignUpForm
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 
+# TODO: Re-implement using Base views (from django.views import View, TemplateView and RedirectView)
 
 class SignUpView(CreateView):
     form_class = SignUpForm

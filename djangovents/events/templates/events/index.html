@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for event in events %}
+      {% for event in event_list %}
         <tr>
           <td><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></td>
           <td>{{ event.event_date }}</td>

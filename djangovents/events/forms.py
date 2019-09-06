@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Event
 
+#TODO: reimplement EventForm using regular form
 
 class SignUpForm(UserCreationForm):
   first_name = forms.CharField(max_length=30, help_text='Required.')

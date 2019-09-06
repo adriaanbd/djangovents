@@ -7,6 +7,10 @@ from .models import Event
 from .forms import EventForm, SignUpForm
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.urls import reverse_lazy
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import serializers
+from .serializers import EventSerializer
 
 
 class SignUpView(CreateView):
@@ -64,3 +68,10 @@ class EventUpdateView(UpdateView):
         if self.object.creator != self.request.user:
             return redirect(self.success_url)
         return super().get(request, *args, **kwargs)
+
+## API VIEWS
+class EventsApiView(APIView):
+    def get(self, request):
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many=True)
+        return Response({'events': serializer.data})

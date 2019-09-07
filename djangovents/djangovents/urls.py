@@ -18,7 +18,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('events.urls')),  # root route to events
-    # path('events/', include('events.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    # path('events/', include('events.urls')),
+    # path('', RedirectView.as_view(url='/eventos/', permanent=True))
 ]

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3 class="center">All Events</h3>
+<table class="striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Venue</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in event_list %}
+        <tr>
+          <td><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></td>
+          <td>{{ event.event_date }}</td>
+          <td>{{ event.venue }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3 class="center">New Event</h3>
+<form method="post" novalidate>
+  {{ form.as_p }}
+  <input type="submit" value="Submit">
+{% csrf_token %}
+</form>
+{% endblock content %}

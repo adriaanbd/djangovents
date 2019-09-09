@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="center">
+  <h3>{{ event.name }}</h3>
+  {% if user == event.creator %}
+    <a href="{% url 'edit' event.id %}">Edit</a>
+    <a href="{% url 'delete' event.id %}">Delete</a>
+  {% endif %}
+</div>
+<table class="striped">
+  <tr><td class="center">Date: {{ event.event_date }}</td></tr>
+  <tr><td class="center">Start at: {{ event.time_start }}</td></tr>
+  <tr><td class="center">Ends at: {{ event.time_end }}</td></tr>
+  <tr><td class="center">Venue: {{ event.venue }}</td></tr>
+  <tr><td class="center">Description: {{ event.description }}</td></tr>
+  <tr><td class="center">Created by: {{ event.creator }}</td></tr>
+  <tr><td class="center">Published: {{ event.date_created }}</td></tr>
+</table>
+{% endblock content %}
